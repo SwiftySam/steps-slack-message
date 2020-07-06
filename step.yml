@@ -296,12 +296,12 @@ inputs:
         The *url* is the fully qualified http or https url to deliver users to.
 
         An attachment may contain 1 to 5 buttons.
-				
+        
   - scheduled_date: ""
     opts:
       title: "Schedule the message to be sent in the future"
       description: |
         If set the message will be posted at the moment specified.
-				The provided date should be in UNIX timestamp format (eg. 1594018024).
+        The provided date should be in UNIX timestamp format (eg. 1594018024).
         
         Messages can only be scheduled up to 120 days in advance, and can't be scheduled for the past.
