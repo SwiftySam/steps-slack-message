@@ -32,7 +32,7 @@ type Config struct {
 	LinkNames        bool            `env:"link_names,opt[yes,no]"`
 	Username         string          `env:"from_username"`
 	UsernameOnError  string          `env:"from_username_on_error"`
-	ScheduledDate    string          `env:"scheduled_date"`
+	ScheduledDate    int             `env:"scheduled_date"`
 
 	// Attachment
 	Color           string `env:"color,required"`
