@@ -30,6 +30,8 @@ type Message struct {
 
 	// Username specifies the bot's username for the message.
 	Username string `json:"username,omitempty"`
+
+	ScheduledDate string `json:"post_at"`
 }
 
 // Attachment adds more context to a slack chat message.

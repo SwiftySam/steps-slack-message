@@ -32,6 +32,7 @@ type Config struct {
 	LinkNames        bool            `env:"link_names,opt[yes,no]"`
 	Username         string          `env:"from_username"`
 	UsernameOnError  string          `env:"from_username_on_error"`
+	ScheduledDate    string          `env:"scheduled_date"`
 
 	// Attachment
 	Color           string `env:"color,required"`
@@ -90,10 +91,11 @@ func newMessage(c Config) Message {
 			FooterIcon: c.FooterIcon,
 			Buttons:    parseButtons(c.Buttons),
 		}},
-		IconEmoji: selectValue(c.IconEmoji, c.IconEmojiOnError),
-		IconURL:   selectValue(c.IconURL, c.IconURLOnError),
-		LinkNames: c.LinkNames,
-		Username:  selectValue(c.Username, c.UsernameOnError),
+		IconEmoji:     selectValue(c.IconEmoji, c.IconEmojiOnError),
+		IconURL:       selectValue(c.IconURL, c.IconURLOnError),
+		LinkNames:     c.LinkNames,
+		Username:      selectValue(c.Username, c.UsernameOnError),
+		ScheduledDate: c.ScheduledDate,
 	}
 	if c.TimeStamp {
 		msg.Attachments[0].TimeStamp = int(time.Now().Unix())
@@ -111,7 +113,11 @@ func postMessage(conf Config, msg Message) error {
 
 	url := string(conf.WebhookURL)
 	if string(conf.APIToken) != "" {
-		url = "https://slack.com/api/chat.postMessage"
+		if conf.ScheduledDate != "" {
+			url = "https://slack.com/api/chat.scheduleMessage"
+		} else {
+			url = "https://slack.com/api/chat.postMessage"
+		}
 	}
 
 	req, err := http.NewRequest("POST", url, bytes.NewReader(b))
